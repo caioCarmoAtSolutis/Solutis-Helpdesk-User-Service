@@ -27,7 +27,7 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany
+    @ManyToOne
     private UserRole role;
 
     @Column(name = "ACTIVE")

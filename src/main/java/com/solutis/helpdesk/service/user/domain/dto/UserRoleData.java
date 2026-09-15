@@ -8,9 +8,9 @@ import jakarta.validation.constraints.NotNull;
 public record UserRoleData(
         @NotNull
         @Max(50)
-        Role value
+        Role role
 ) {
     public UserRoleData(UserRole role) {
-        this(role.getValue());
+        this(role.getRole());
     }
 }

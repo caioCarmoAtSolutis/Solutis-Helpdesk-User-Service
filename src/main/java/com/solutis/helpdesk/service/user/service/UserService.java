@@ -40,7 +40,7 @@ public class UserService {
     public DetailedUserData updateUser(UUID id, UserData data) {
         var userRole = getUserRole(data.role());
         validateEmail(data.email());
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = getUserById(id);
         user.update(data, userRole);
         user = userRepository.save(user);
         return new DetailedUserData(user);
@@ -65,7 +65,7 @@ public class UserService {
     }
 
     private UserRole getUserRole(UserRoleData data) {
-        Optional<UserRole> optional = userRoleRepository.findByRole(data.value());
+        Optional<UserRole> optional = userRoleRepository.findByRole(data.role().toString());
         if (optional.isEmpty())
             throw new EntityNotFoundException();
         return optional.get();
