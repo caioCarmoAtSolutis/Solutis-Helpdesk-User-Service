@@ -1,5 +1,6 @@
 package com.solutis.helpdesk.service.user.domain.model;
 
+import com.solutis.helpdesk.service.user.domain.dto.UserData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,27 @@ public class User {
 
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
+
+    public User(UserData data, UserRole role) {
+        this.id = UUID.randomUUID();
+        this.name = data.name();
+        this.email = data.email();
+        this.role = role;
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public void update(UserData data, UserRole role) {
+        this.name = data.name();
+        this.email = data.email();
+        this.role = role;
+    }
+
+    public void activate() {
+        this.active = true;
+    }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }

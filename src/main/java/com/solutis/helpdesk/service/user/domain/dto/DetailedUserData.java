@@ -6,9 +6,10 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record ListUserData(
+public record DetailedUserData(
         @NotNull
         UUID id,
 
@@ -25,9 +26,12 @@ public record ListUserData(
         UserRoleData role,
 
         @NotNull
-        Boolean active
+        Boolean active,
+
+        @NotNull
+        LocalDateTime createdAt
 ) {
-        public ListUserData(User user) {
-                this(user.getId(), user.getName(), user.getEmail(), new UserRoleData(user.getRole()), user.getActive());
+        public DetailedUserData(User user) {
+                this(user.getId(), user.getName(), user.getEmail(), new UserRoleData(user.getRole()), user.getActive(), user.getCreatedAt());
         }
 }
