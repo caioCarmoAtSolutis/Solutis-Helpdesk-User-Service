@@ -2,9 +2,9 @@ package com.solutis.helpdesk.service.user.domain.dto;
 
 import com.solutis.helpdesk.service.user.domain.model.User;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
@@ -13,12 +13,12 @@ public record ListUserData(
         UUID id,
 
         @NotBlank
-        @Max(150)
+        @Size(max = 150)
         String name,
 
         @NotBlank
         @Email
-        @Max(100)
+        @Size(max = 100)
         String email,
 
         @NotNull

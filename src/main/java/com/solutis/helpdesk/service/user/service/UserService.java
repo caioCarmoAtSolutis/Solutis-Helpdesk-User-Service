@@ -3,6 +3,7 @@ package com.solutis.helpdesk.service.user.service;
 import com.solutis.helpdesk.service.user.domain.dto.*;
 import com.solutis.helpdesk.service.user.domain.model.User;
 import com.solutis.helpdesk.service.user.domain.model.UserRole;
+import com.solutis.helpdesk.service.user.infrastruture.exception.EmailAddressUnavailableException;
 import com.solutis.helpdesk.service.user.repository.UserRepository;
 import com.solutis.helpdesk.service.user.repository.UserRoleRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -61,18 +62,21 @@ public class UserService {
     }
 
     public User getUserById(UUID id) {
-        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isEmpty())
+            throw new EntityNotFoundException("User entity with id " + id.toString() + " not found!");
+        return optional.get();
     }
 
     private UserRole getUserRole(UserRoleData data) {
-        Optional<UserRole> optional = userRoleRepository.findByRole(data.role().toString());
+        Optional<UserRole> optional = userRoleRepository.findByRole(data.role());
         if (optional.isEmpty())
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Role entity " + data.role().toString() + " not found!");
         return optional.get();
     }
 
     private void validateEmail(String email) {
         if (userRepository.existsByEmail(email))
-            throw new RuntimeException();
+            throw new EmailAddressUnavailableException("The following email address " + email + " is being used, please try to login!");
     }
 }

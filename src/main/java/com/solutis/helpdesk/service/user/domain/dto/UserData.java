@@ -1,18 +1,15 @@
 package com.solutis.helpdesk.service.user.domain.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public record UserData(
         @NotBlank
-        @Max(150)
+        @Size(max = 150)
         String name,
 
         @NotBlank
         @Email
-        @Max(100)
+        @Size(max = 100)
         String email,
 
         @NotNull
