@@ -1,8 +1,5 @@
 package com.solutis.helpdesk.service.user.controller;
 
-import com.solutis.helpdesk.service.user.domain.dto.DetailedUserData;
-import com.solutis.helpdesk.service.user.domain.dto.ListUserData;
-import com.solutis.helpdesk.service.user.domain.dto.UserActivityStatusData;
 import com.solutis.helpdesk.service.user.domain.dto.UserData;
 import com.solutis.helpdesk.service.user.domain.dto.UserRoleData;
 import com.solutis.helpdesk.service.user.domain.model.Role;
