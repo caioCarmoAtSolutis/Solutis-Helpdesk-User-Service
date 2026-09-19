@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -40,6 +41,7 @@ public class UserController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MethodArgumentNotValidExceptionExceptionMessage.class)) }),
             @ApiResponse(responseCode = "400", description = "Email provided for is being used",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+    @Transactional
     @PostMapping
     public ResponseEntity<DetailedUserData> createUser(@Valid @RequestBody UserData data, UriComponentsBuilder uriComponentsBuilder) {
         DetailedUserData createdUser = userService.createUser(data);
@@ -80,6 +82,7 @@ public class UserController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid input data provided",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MethodArgumentNotValidExceptionExceptionMessage.class)) }) })
+    @Transactional
     @PutMapping("{id}")
     public ResponseEntity<DetailedUserData> updateUser(@PathVariable UUID id, @Valid @RequestBody UserData data) {
         DetailedUserData updatedUser = userService.updateUser(id, data);
@@ -93,6 +96,7 @@ public class UserController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
             @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+    @Transactional
     @PostMapping("{id}/deactivate")
     public ResponseEntity<UserActivityStatusData> deactivateUser(@PathVariable UUID id) {
         UserActivityStatusData deactivatedUser = userService.deactivateUser(id);
@@ -106,6 +110,7 @@ public class UserController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
             @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+    @Transactional
     @PostMapping("{id}/activate")
     public ResponseEntity<UserActivityStatusData> activateUser(@PathVariable UUID id) {
         UserActivityStatusData deactivatedUser = userService.activateUser(id);
@@ -118,6 +123,7 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "User deleted successfully"),
             @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
