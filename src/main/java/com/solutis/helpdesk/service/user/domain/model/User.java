@@ -45,6 +45,15 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
+    public User(UUID id, UserData data, UserRole role) {
+        this.id = id;
+        this.name = data.name();
+        this.email = data.email();
+        this.role = role;
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
+    }
+
     public void update(UserData data, UserRole role) {
         this.name = data.name();
         this.email = data.email();

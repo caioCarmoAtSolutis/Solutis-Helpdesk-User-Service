@@ -30,6 +30,14 @@ public class UserService {
         return new DetailedUserData(user);
     }
 
+    public DetailedUserData createUser(UUID userId, UserData data) {
+        var userRole = getUserRole(data.role());
+        validateEmail(data.email());
+        var user = new User(userId, data, userRole);
+        user = userRepository.save(user);
+        return new DetailedUserData(user);
+    }
+
     public Page<ListUserData> getUsers(Pageable pageable) {
         return userRepository.findAll(pageable).map(ListUserData::new);
     }
