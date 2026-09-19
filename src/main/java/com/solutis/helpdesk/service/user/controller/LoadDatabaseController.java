@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/load=data")
+@RequestMapping("/load-data")
 public class LoadDatabaseController {
     @Autowired
     private LoadDatabaseService loadDatabaseService;
