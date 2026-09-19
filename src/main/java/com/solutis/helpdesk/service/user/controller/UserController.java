@@ -37,7 +37,9 @@ public class UserController {
             @ApiResponse(responseCode = "201", description = "New user created successfully",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid input data provided",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MethodArgumentNotValidExceptionExceptionMessage.class)) }) })
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MethodArgumentNotValidExceptionExceptionMessage.class)) }),
+            @ApiResponse(responseCode = "400", description = "Email provided for is being used",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
     @PostMapping
     public ResponseEntity<DetailedUserData> createUser(@Valid @RequestBody UserData data, UriComponentsBuilder uriComponentsBuilder) {
         DetailedUserData createdUser = userService.createUser(data);
@@ -48,10 +50,8 @@ public class UserController {
     @Tag(name = "List user")
     @Operation(summary = "List all users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New user created successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input data provided",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+            @ApiResponse(responseCode = "200", description = "List of all users",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }) })
     @GetMapping
     public ResponseEntity<Page<ListUserData>> getUsers(@PageableDefault(size = 10) Pageable pageable) {
         Page<ListUserData> page = userService.getUsers(pageable);
@@ -61,9 +61,9 @@ public class UserController {
     @Tag(name = "List user")
     @Operation(summary = "List user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New user created successfully",
+            @ApiResponse(responseCode = "200", description = "User with specified id",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input data provided",
+            @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
     @GetMapping("{id}")
     public ResponseEntity<ListUserData> getUser(@PathVariable UUID id) {
@@ -76,6 +76,8 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User updated successfully",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
+            @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid input data provided",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MethodArgumentNotValidExceptionExceptionMessage.class)) }) })
     @PutMapping("{id}")
@@ -89,7 +91,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User deactivated successfully",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input data provided",
+            @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
     @PostMapping("{id}/deactivate")
     public ResponseEntity<UserActivityStatusData> deactivateUser(@PathVariable UUID id) {
@@ -102,7 +104,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User activated successfully",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input data provided",
+            @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
     @PostMapping("{id}/activate")
     public ResponseEntity<UserActivityStatusData> activateUser(@PathVariable UUID id) {
