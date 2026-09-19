@@ -108,7 +108,7 @@ public class LoadDatabaseService {
                 UUID.fromString("1c2d3e4f-5a6b-7c8d-9e0f-1a2b3c4d5e6f"),
                 new UserData("Oscar Martinez",
                         "oscar.martinez@example.com",
-                        new UserRoleData(Role.ADMIN)))
+                        new UserRoleData(Role.CLIENT)))
         );
 
         return list;
