@@ -111,4 +111,16 @@ public class UserController {
         UserActivityStatusData deactivatedUser = userService.activateUser(id);
         return ResponseEntity.ok(deactivatedUser);
     }
+
+    @Tag(name = "Delete User")
+    @Operation(summary = "Hard delete user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "User with specified id doesn't exist",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) }) })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }

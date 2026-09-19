@@ -87,4 +87,9 @@ public class UserService {
         if (userRepository.existsByEmail(email))
             throw new EmailAddressUnavailableException("The following email address " + email + " is being used, please try to login!");
     }
+
+    public void deleteUser(UUID id) {
+        getUserById(id);
+        userRepository.deleteById(id);
+    }
 }
