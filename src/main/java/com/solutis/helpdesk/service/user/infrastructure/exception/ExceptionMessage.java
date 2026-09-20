@@ -1,4 +1,4 @@
-package com.solutis.helpdesk.service.user.infrastruture.exception;
+package com.solutis.helpdesk.service.user.infrastructure.exception;
 
 import jakarta.validation.constraints.NotBlank;
 

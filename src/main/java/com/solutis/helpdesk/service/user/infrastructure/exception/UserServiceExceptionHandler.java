@@ -1,4 +1,4 @@
-package com.solutis.helpdesk.service.user.infrastruture.exception;
+package com.solutis.helpdesk.service.user.infrastructure.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;

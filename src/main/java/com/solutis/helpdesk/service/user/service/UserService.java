@@ -3,7 +3,7 @@ package com.solutis.helpdesk.service.user.service;
 import com.solutis.helpdesk.service.user.domain.dto.*;
 import com.solutis.helpdesk.service.user.domain.model.User;
 import com.solutis.helpdesk.service.user.domain.model.UserRole;
-import com.solutis.helpdesk.service.user.infrastruture.exception.EmailAddressUnavailableException;
+import com.solutis.helpdesk.service.user.infrastructure.exception.EmailAddressUnavailableException;
 import com.solutis.helpdesk.service.user.repository.UserRepository;
 import com.solutis.helpdesk.service.user.repository.UserRoleRepository;
 import jakarta.persistence.EntityNotFoundException;
