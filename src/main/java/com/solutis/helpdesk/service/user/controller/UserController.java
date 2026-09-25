@@ -73,6 +73,19 @@ public class UserController {
         return ResponseEntity.ok(userData);
     }
 
+    @Tag(name = "List user")
+    @Operation(summary = "List users by role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users with specified role",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserData.class)) }),
+            @ApiResponse(responseCode = "400", description = "Specified role doesn't exist",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionMessage.class)) })})
+    @GetMapping("/role/{role}")
+    public ResponseEntity<Page<ListUserData>> getUserByRole(@PageableDefault(size = 10) Pageable pageable, @PathVariable String role) {
+        Page<ListUserData> page = userService.getUsersByRole(pageable, role);
+        return ResponseEntity.ok(page);
+    }
+
     @Tag(name = "Update user")
     @Operation(summary = "Update user")
     @ApiResponses(value = {

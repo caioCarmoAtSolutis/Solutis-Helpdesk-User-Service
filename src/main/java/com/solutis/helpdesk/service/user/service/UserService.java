@@ -1,6 +1,7 @@
 package com.solutis.helpdesk.service.user.service;
 
 import com.solutis.helpdesk.service.user.domain.dto.*;
+import com.solutis.helpdesk.service.user.domain.model.Role;
 import com.solutis.helpdesk.service.user.domain.model.User;
 import com.solutis.helpdesk.service.user.domain.model.UserRole;
 import com.solutis.helpdesk.service.user.infrastructure.exception.EmailAddressUnavailableException;
@@ -44,6 +45,12 @@ public class UserService {
 
     public ListUserData getUser(UUID id) {
         return new ListUserData(getUserById(id));
+    }
+
+    public Page<ListUserData> getUsersByRole(Pageable pageable, String searchRole) {
+        var role = new UserRoleData(Role.valueOf(searchRole));
+        UserRole userRole = getUserRole(role);
+        return userRepository.findAllByRole(pageable, userRole).map(ListUserData::new);
     }
 
     public DetailedUserData updateUser(UUID id, UserData data) {
